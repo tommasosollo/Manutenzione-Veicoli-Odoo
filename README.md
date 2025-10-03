@@ -12,7 +12,7 @@ Modello <b>vehicle.vehicle</b> con: <br>
 Targa, marca, modello, anno <br>
 Proprietario (link a res.partner) <br>
 Km attuali, data prossima revisione <br>
-Smart h3utton collegati a interventi fatti e fatture. <br>
+Smart button collegati a interventi fatti e fatture. <br>
 
 
 <h3>Gestione Interventi / Ordini di Lavoro</h3>
