@@ -9,7 +9,8 @@
 
 Modello <b>vehicle.vehicle</b> con:
 
-Targa, marca, modello, anno
+Targa, marca, modello, anno 
+
 Proprietario (link a res.partner)
 Km attuali, data prossima revisione
 Smart h3utton collegati a interventi fatti e fatture.
