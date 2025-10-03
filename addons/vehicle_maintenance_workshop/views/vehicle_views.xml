@@ -12,6 +12,7 @@
                 <field name="anno" optional="show"/>
                 <field name="proprietario_id" optional="show"/>
                 <field name="km_attuali" optional="show" />
+                <field name="data_ultima_revisione" optional="show" />
                 <field name="data_prox_revisione" optional="show"/>
             </tree>
         </field>
@@ -34,6 +35,7 @@
                             <field name="proprietario_id" />
                             <field name="km_attuali"  />
                             <field name="data_prox_revisione" />
+                            <field name="data_ultima_revisione" />
                         </group>
                     </group>
                 </sheet>

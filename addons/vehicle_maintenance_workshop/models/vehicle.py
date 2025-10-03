@@ -27,9 +27,20 @@ class Vehicle(models.Model):
     
     km_attuali = fields.Integer(string="Chilometri",
                                 required=True)
+    
+    data_ultima_revisione = fields.Date(string="Data Ultima Revisione",
+                                        default = False,
+                                        store = True)
 
+    def _compute_prox_revisione(self):
+        if self.data_ultima_revisione:
+            retval = self.data_ultima_revisione + timedelta(days=365)
+        else:
+            retval = fields.Date.today() + timedelta(days=365)
+        return retval
+    
     data_prox_revisione = fields.Date(string="Data Prossima Revisione",
-                                      default= lambda self: fields.Date.today() + timedelta(days=365),
+                                      default = _compute_prox_revisione,
                                       store=True
                                       )
 
