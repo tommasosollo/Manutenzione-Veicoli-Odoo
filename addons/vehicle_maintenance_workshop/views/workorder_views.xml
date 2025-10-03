@@ -55,6 +55,7 @@
                                 <tree editable="bottom">
                                     <field name="product_id" />
                                     <field name="quantita" />
+                                    <field name="quantita_rimasta" />
                                     <field name="costo" />
                                     <field name="subtotal" />
                                 </tree>

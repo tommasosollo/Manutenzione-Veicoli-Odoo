@@ -5,11 +5,53 @@
         <field name="name">Prodotti</field>
         <field name="res_model">product.product</field>
         <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="product.product_template_tree_view"/>
+        <field name="view_id" ref="custom_product_product_tree_view"/>
         <field name="help" type="html">
             <p>
                 Visualizza i prodotti disponibili.
             </p>
+        </field>
+    </record>
+
+    <record id="custom_product_form_view" model="ir.ui.view">
+        <field name="name">Custom Product Form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="replace">
+                <form string="Product">
+                    <sheet>
+                        <group>
+                            <field class="text-break" name="name" options="{'line_breaks': False}" widget="text" placeholder="es. Hamburger al formaggio" on_change="1" field_id="name_0" />
+                        </group>
+                        <notebook>
+                            <page string="Informazioni Generali">
+                                <group>
+                                    <field name="standard_price" class="oe_inline" widget="monetary" options="{'currency_field': 'cost_currency_id', 'field_digits': True}" field_id="standard_price_0"/>
+                                    
+                                    <field name="cost_currency_id" invisible="1" on_change="1" field_id="cost_currency_id_0"/>
+
+                                    <field name="barcode" field_id="barcode_0"/>
+                                    <field name="quantita_rimasta" />
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="custom_product_product_tree_view" model="ir.ui.view">
+        <field name="name">Custom Product Variant Tree</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <tree string="Product Variant">
+                <field name="name"/>
+                <field name="barcode"/>
+                <field name="standard_price" widget="monetary"/>
+                <field name="quantita_rimasta"/>
+            </tree>
         </field>
     </record>
 

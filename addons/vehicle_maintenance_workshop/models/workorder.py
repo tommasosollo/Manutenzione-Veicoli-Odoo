@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 
 class Workorder(models.Model):
@@ -111,3 +112,33 @@ class WorkorderRicambio(models.Model):
     def _compute_subtotal(self):
         for rec in self:
             rec.subtotal = rec.costo * rec.quantita
+
+    
+    quantita_rimasta = fields.Integer(
+        string="Quantità Rimasta",
+        compute="_compute_quantita_rimasta",
+        store=False
+    )
+
+    @api.depends('product_id.quantita_totale', 'quantita', 'product_id.quantita_utilizzata_ids')
+    def _compute_quantita_rimasta(self):
+        for rec in self:
+            used = sum(i.quantita for i in rec.product_id.quantita_utilizzata_ids if i != rec)
+            rec.quantita_rimasta = rec.product_id.quantita_totale - used - rec.quantita
+
+            
+    
+    @api.constrains('quantita')
+    def _check_quantita(self):
+        for rec in self:
+            # compute remaining quantity dynamically
+            used = sum(i.quantita for i in rec.product_id.quantita_utilizzata_ids if i != rec)
+            remaining = rec.product_id.quantita_totale - used
+            if rec.quantita > remaining:
+                raise ValidationError(
+                    f"Non ci sono abbastanza pezzi in magazzino! Quantità disponibile: {remaining}"
+                )
+            if rec.quantita < 0:
+                raise ValidationError("La quantità non può essere negativa!")
+
+    
