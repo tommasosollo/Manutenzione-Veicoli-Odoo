@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_workorder_tree" model="ir.ui.view">
+        <field name="name">vehicle.workorder.tree</field>
+        <field name="model">vehicle.workorder</field>
+        <field name="arch" type="xml">
+            <tree string="Interventi">
+                <field name="reference" optional="show"/>
+                <field name="vehicle_id" optional="show"/>
+                <field name="tipo_intervento_ids" optional="show"/>
+                <field name="stato" optional="show"/>
+                <field name="ricambi_usati_ids" optional="show"/>
+                <field name="ore_lavorate" optional="show" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_workorder_form" model="ir.ui.view">
+        <field name="name">vehicle.workorder.form</field>
+        <field name="model">vehicle.workorder</field>
+        <field name="arch" type="xml">
+            <form string="Interventi">
+                <header>
+                    <header>
+                        <button name="action_conferma" type="object" string="Conferma"
+                            invisible="stato != 'bozza'" class="oe_highlight"/>
+                        <button name="action_in_corso" type="object" string="In Corso"
+                            invisible="stato != 'confermato'" class="oe_highlight"/>
+                        <button name="action_completato" type="object" string="Completato"
+                            invisible="stato != 'in_corso'" class="oe_highlight"/>
+                        <button name="action_fatturato" type="object" string="Fatturato"
+                            invisible="stato != 'completato'" class="oe_highlight"/>
+                        <button name="action_cancella" type="object" string="Cancella"
+                            invisible="stato in ('completato','fatturato', 'cancellato')" class="oe_highlight"/>
+                    </header>
+
+
+                    <field name="stato" widget="statusbar" />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="reference" readonly="1"/>
+                            <field name="tipo_intervento_ids"  widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="vehicle_id" />
+                            <field name="ore_lavorate" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="ricambi_usati_ids" string="Ricambi Usati">
+                            <field name="ricambi_usati_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id" />
+                                    <field name="quantita" />
+                                    <field name="costo" />
+                                    <field name="subtotal" />
+                                </tree>
+                            </field>
+                            <group>
+                                <field name="costo_totale" />
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div> -->
+            </form>
+        </field>
+    </record>
+
+    <record id="action_workorder" model="ir.actions.act_window">
+        <field name="name">Interventi</field>
+        <field name="res_model">vehicle.workorder</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea un nuovo veicolo
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,2 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_vehicle,access_vehicle,model_vehicle_vehicle,base.group_user,1,1,1,1
+access_workorder,access_workorder,model_vehicle_workorder,base.group_user,1,1,1,1
+access_workorder_ricambio,access_workorder_ricambio,model_workorder_ricambio,base.group_user,1,1,1,1
+access_workorder_type,access_workorder_type,model_vehicle_workorder_type,base.group_user,1,1,1,1

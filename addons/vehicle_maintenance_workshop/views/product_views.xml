@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_product_product" model="ir.actions.act_window">
+        <field name="name">Prodotti</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="product.product_template_tree_view"/>
+        <field name="help" type="html">
+            <p>
+                Visualizza i prodotti disponibili.
+            </p>
+        </field>
+    </record>
+
+</odoo>

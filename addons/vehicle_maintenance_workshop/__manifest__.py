@@ -4,12 +4,17 @@
     "license": "LGPL-3",
     "version": "17.0.1.0",
     "depends": [
-        "base"
+        "base",
+        "product"
     ],
 
     "data": [
         "security/ir.model.access.csv",
         "views/vehicle_views.xml",
+        "views/workorder_views.xml",
+        "views/workorder_type_views.xml",
+        "views/product_views.xml",
+        "data/sequence.xml",
         "views/menu.xml",
     ],
     "installable": True,

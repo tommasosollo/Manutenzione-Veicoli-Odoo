@@ -37,3 +37,9 @@ class Vehicle(models.Model):
         ('unique_targa', 'unique(targa)', 'La targa deve essere univoca!')
     ]
     
+
+    # Metodi generali
+
+    def _compute_display_name(self):
+        for rec in self:
+            rec.display_name = f"[{rec.targa}] {rec.marca} {rec.modello}"
