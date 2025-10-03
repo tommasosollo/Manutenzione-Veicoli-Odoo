@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_vehicle_tree" model="ir.ui.view">
+        <field name="name">vehicle.vehicle.tree</field>
+        <field name="model">vehicle.vehicle</field>
+        <field name="arch" type="xml">
+            <tree string="Veicoli">
+                <field name="targa" optional="show"/>
+                <field name="marca" optional="show"/>
+                <field name="modello" optional="show"/>
+                <field name="anno" optional="show"/>
+                <field name="proprietario_id" optional="show"/>
+                <field name="km_attuali" optional="show" />
+                <field name="data_prox_revisione" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hospital_appointment_form" model="ir.ui.view">
+        <field name="name">vehicle.form</field>
+        <field name="model">vehicle.vehicle</field>
+        <field name="arch" type="xml">
+            <form string="Veicoli">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="targa" />
+                            <field name="marca" />
+                            <field name="modello" />
+                            <field name="anno" />
+                        </group>
+                        <group>
+                            <field name="proprietario_id" />
+                            <field name="km_attuali"  />
+                            <field name="data_prox_revisione" />
+                        </group>
+                    </group>
+                </sheet>
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div> -->
+            </form>
+        </field>
+    </record>
+
+    <record id="action_vehicle" model="ir.actions.act_window">
+        <field name="name">Veicoli</field>
+        <field name="res_model">vehicle.vehicle</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea un nuovo veicolo
+            </p>
+        </field>
+    </record>
+
+</odoo>

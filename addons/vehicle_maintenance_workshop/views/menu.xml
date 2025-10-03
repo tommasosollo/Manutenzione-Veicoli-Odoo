@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_vmw_root" name="VMW" sequence="1" />
+
+    <menuitem id="menu_vehicle" name="Veicoli" parent="menu_vmw_root" action="action_vehicle" />
+</odoo>

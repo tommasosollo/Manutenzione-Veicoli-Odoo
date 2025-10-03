@@ -8,6 +8,9 @@
     ],
 
     "data": [
+        "security/ir.model.access.csv",
+        "views/vehicle_views.xml",
+        "views/menu.xml",
     ],
     "installable": True,
     "application": True,

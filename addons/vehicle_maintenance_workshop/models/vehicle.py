@@ -1,12 +1,12 @@
 from odoo import models, fields, api
-from datetime import datetime
+from datetime import timedelta, datetime
 
 class Vehicle(models.Model):
 
     _name = "vehicle.vehicle"
     _description = "Vehicle Model"
 
-    targa = fields.Char(string="Targa", required=True)
+    targa = fields.Char(string="Targa", required=True, )
 
     marca = fields.Char(string="Marca", required=True)
 
@@ -18,7 +18,7 @@ class Vehicle(models.Model):
             required=True
         )
     
-    proprietario_id = fields.Many2One(
+    proprietario_id = fields.Many2one(
         "res.partner", 
         string="Propritario Veicolo",
         help="Collegamento al proprietario da res.partner",
@@ -29,9 +29,11 @@ class Vehicle(models.Model):
                                 required=True)
 
     data_prox_revisione = fields.Date(string="Data Prossima Revisione",
-                                      default="_compute_prox_revisione")
-    
-    def _compute_prox_revisione(self):
-        # usare piani di manutenzione preventiva per calcolare prox revisione
-        pass
+                                      default= lambda self: fields.Date.today() + timedelta(days=365),
+                                      store=True
+                                      )
+
+    _sql_constraints = [
+        ('unique_targa', 'unique(targa)', 'La targa deve essere univoca!')
+    ]
     
