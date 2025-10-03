@@ -10,6 +10,7 @@
 
     "data": [
         "security/ir.model.access.csv",
+        "security/security.xml",
         "views/vehicle_views.xml",
         "views/workorder_views.xml",
         "views/workorder_type_views.xml",

@@ -9,7 +9,11 @@
 
     <menuitem id="menu_configurations" name="Configurazioni" parent="menu_vmw_root" />
 
-    <menuitem id="menu_workorder_type" name="Tipologie Interventi" parent="menu_configurations" action="action_workorder_type" />
+    <menuitem id="menu_workorder_type" 
+        name="Tipologie Interventi" 
+        parent="menu_configurations" 
+        action="action_workorder_type" 
+        groups="vehicle_maintenance_workshop.group_workshop_chief" />
 
     <menuitem id="menu_product_product" 
               name="Prodotti" 
