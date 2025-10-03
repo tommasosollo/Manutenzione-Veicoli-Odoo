@@ -1,26 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
+    <!-- Menu Root Vehicle Maintenance Workshop (VMW) -->
     <menuitem id="menu_vmw_root" name="VMW" sequence="1" />
 
-    <menuitem id="menu_vehicle" name="Veicoli" parent="menu_vmw_root" action="action_vehicle" />
+    <!-- Menu Veicoli -->
+    <menuitem id="menu_vehicle" 
+              name="Veicoli" 
+              parent="menu_vmw_root" 
+              action="action_vehicle" 
+              groups="vehicle_maintenance_workshop.group_workshop_mechanic,vehicle_maintenance_workshop.group_workshop_chief"/>
 
-    <menuitem id="menu_workorder" name="Interventi" parent="menu_vmw_root" action="action_workorder" />
+    <!-- Menu Interventi -->
+    <menuitem id="menu_workorder" 
+              name="Interventi" 
+              parent="menu_vmw_root"
+              action="action_workorder"
+              groups="vehicle_maintenance_workshop.group_workshop_mechanic,vehicle_maintenance_workshop.group_workshop_chief" />
 
-    <menuitem id="menu_configurations" name="Configurazioni" parent="menu_vmw_root" />
-
+    <!-- Menu root Configurazioni -->
+    <menuitem id="menu_configurations" 
+              name="Configurazioni" 
+              parent="menu_vmw_root"
+              groups="vehicle_maintenance_workshop.group_workshop_chief" />
+    <!-- Menu tipi interventi -->
     <menuitem id="menu_workorder_type" 
         name="Tipologie Interventi" 
         parent="menu_configurations" 
-        action="action_workorder_type" 
-        groups="vehicle_maintenance_workshop.group_workshop_chief" />
+        action="action_workorder_type" />
 
+    <!-- Menu Prodotti -->
     <menuitem id="menu_product_product" 
               name="Prodotti" 
               parent="menu_vmw_root" 
-              action="action_product_product"/>
+              action="action_product_product"
+              groups="vehicle_maintenance_workshop.group_workshop_mechanic,vehicle_maintenance_workshop.group_workshop_chief"/>
     
-    <menuitem id="menu_invoice_root" name="Fatturazione" parent="menu_vmw_root" />
-    <menuitem id="menu_invoice" name="Fatture" parent="menu_invoice_root" action="account.action_move_out_invoice_type" />
-    <menuitem id="menu_payments" name="Pagamenti" parent="menu_invoice_root" action="account.action_account_payments" />
+    <!-- Menu Fatturazione -->
+    <menuitem id="menu_invoice_root" 
+              name="Fatturazione" 
+              parent="menu_vmw_root" 
+              groups="vehicle_maintenance_workshop.group_workshop_administration,vehicle_maintenance_workshop.group_workshop_chief"/>
+    <!-- Fatture -->
+    <menuitem id="menu_invoice" 
+              name="Fatture" 
+              parent="menu_invoice_root" 
+              action="account.action_move_out_invoice_type" />
+    <!-- Pagamenti -->
+    <menuitem id="menu_payments" 
+              name="Pagamenti" 
+              parent="menu_invoice_root" 
+              action="account.action_account_payments" />
 </odoo>

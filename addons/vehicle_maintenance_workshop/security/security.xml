@@ -12,17 +12,22 @@
             <field name="name">Meccanico</field>
             <field name="category_id" ref="vehicle_maintenance_workshop.module_category_workshop"></field>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"></field>
-            <field name="comment">l'utente avrà accesso a veicoli, i suoi interventi e i prodotti</field>
+            <field name="comment">L'utente avrà accesso ai veicoli, ai suoi interventi e ai prodotti</field>
         </record>
 
         <record id="group_workshop_chief" model="res.groups">
             <field name="name">Capo Officina</field>
             <field name="category_id" ref="vehicle_maintenance_workshop.module_category_workshop"></field>
             <field name="implied_ids" eval="[(4, ref('vehicle_maintenance_workshop.group_workshop_mechanic'))]"></field>
-            <field name="comment">l'utente avrà accesso a tutti i modelli e campi</field>
+            <field name="comment">L'utente avrà accesso a tutto</field>
         </record>
 
-        <!-- Aggiungere Amministrazione con accesso a contabilita e fatturazione -->
+        <record id="group_workshop_administration" model="res.groups">
+            <field name="name">Amministrazione</field>
+            <field name="category_id" ref="vehicle_maintenance_workshop.module_category_workshop"></field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"></field>
+            <field name="comment">L'utente avrà accesso a fatturazione e contabilità</field>
+        </record>
 
         <record id="mechanic_own_workorders_rule" model="ir.rule">
             <field name="name">Meccanico: vede i suoi interventi</field>
