@@ -1,5 +1,5 @@
 from odoo import models, fields, api
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 
 
 class Workorder(models.Model):
@@ -43,6 +43,14 @@ class Workorder(models.Model):
 
     ore_lavorate = fields.Integer(string="Ore Lavorate")
 
+    fattura_id = fields.Many2one('account.move', string="Fattura Generata")
+
+    cliente_id = fields.Many2one(
+        "res.partner",
+        string="Cliente",
+        required=True
+    )
+
     costo_totale = fields.Float(
         string="Costo Totale",
         compute="_compute_costo_totale"
@@ -78,13 +86,58 @@ class Workorder(models.Model):
         for rec in self:
             rec.stato='completato'
 
-    def action_fatturato(self):
-        for rec in self:
-            rec.stato='fatturato'
-
     def action_cancella(self):
         for rec in self:
             rec.stato='cancellato'
+
+    # Crea fattura in automatico
+    def action_fatturato(self):
+        for rec in self:
+            if rec.stato == 'fatturato':
+                continue
+            
+            # Imposta lo stato a fatturato
+            rec.stato = 'fatturato'
+
+            # Verifica che ci siano dati da fatturare
+            if not rec.ricambi_usati_ids and rec.ore_lavorate == 0:
+                raise UserError("Non ci sono ore di lavoro o ricambi da fatturare.")
+
+            # Creo la fattura (account.move)
+            invoice_vals = {
+                'move_type': 'out_invoice',
+                'partner_id': rec.cliente_id.id if rec.cliente_id else False,
+                'invoice_origin': rec.reference,
+                'invoice_line_ids': [],
+            }
+
+            # Linee prodotti (ricambi usati)
+            for r in rec.ricambi_usati_ids:
+                line_vals = (0, 0, {
+                    'product_id': r.product_id.id,
+                    'quantity': r.quantita,
+                    'price_unit': r.costo,
+                    'name': r.product_id.name,
+                })
+                invoice_vals['invoice_line_ids'].append(line_vals)
+
+            # Linea ore di lavoro
+            if rec.ore_lavorate > 0:
+                service_product = self.env['product.product'].search([('name', '=', 'Ore Lavoro')], limit=1)
+                if not service_product:
+                    raise UserError("Creare un prodotto di tipo Servizio chiamato 'Ore Lavoro'.")
+                line_vals = (0, 0, {
+                    'product_id': service_product.id,
+                    'quantity': rec.ore_lavorate,
+                    'price_unit': service_product.standard_price, # prezzo a caso, da cambiare possibilmente  
+                    'name': service_product.name,
+                })
+                invoice_vals['invoice_line_ids'].append(line_vals)
+
+            # Creo la fattura
+            invoice = self.env['account.move'].create(invoice_vals)
+
+            rec.fattura_id = invoice.id
 
 
 class WorkorderRicambio(models.Model):

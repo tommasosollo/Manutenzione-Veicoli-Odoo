@@ -5,7 +5,8 @@
     "version": "17.0.1.0",
     "depends": [
         "base",
-        "product"
+        "product",
+        "account"
     ],
 
     "data": [

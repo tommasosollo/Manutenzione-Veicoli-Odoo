@@ -19,4 +19,8 @@
               name="Prodotti" 
               parent="menu_vmw_root" 
               action="action_product_product"/>
+    
+    <menuitem id="menu_invoice_root" name="Fatturazione" parent="menu_vmw_root" />
+    <menuitem id="menu_invoice" name="Fatture" parent="menu_invoice_root" action="account.action_move_out_invoice_type" />
+    <menuitem id="menu_payments" name="Pagamenti" parent="menu_invoice_root" action="account.action_account_payments" />
 </odoo>
