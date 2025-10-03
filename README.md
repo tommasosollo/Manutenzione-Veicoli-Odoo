@@ -20,7 +20,7 @@ Smart button collegati a interventi fatti e fatture. <br>
 
 Modello <b>vehicle.workorder</b> con: <br>
 
-Tipo di intervento (tagliando, freni, cambio olio, ecc.) <br>
+Tipo di intervento (tagliando, freni, cambio olio, ecc.) (<b>vehicle.workorder.type</b>) <br>
 Stato: bozza → confermato → in corso → completato → fatturato <br>
 Ricambi usati (collegamento a prodotti di magazzino) <br>
 Ore lavorate (timesheet semplificato) <br>
