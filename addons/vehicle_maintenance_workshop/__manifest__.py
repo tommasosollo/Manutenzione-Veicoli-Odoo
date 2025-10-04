@@ -11,8 +11,8 @@
     ],
 
     "data": [
-        "security/ir.model.access.csv",
         "security/security.xml",
+        "security/ir.model.access.csv",
         "views/vehicle_views.xml",
         "views/workorder_views.xml",
         "views/workorder_type_views.xml",
