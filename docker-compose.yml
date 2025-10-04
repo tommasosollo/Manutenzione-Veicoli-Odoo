@@ -19,7 +19,7 @@ services:
       - DB_PORT=5432
       - DB_USER=odoo
       - DB_PASSWORD=odoo
-      - ADMIN_PASSWD=password   # master password for DB creation
+      - ADMIN_PASSWD=password 
     volumes:
       - ./addons:/mnt/extra-addons
       - ./config:/etc/odoo
