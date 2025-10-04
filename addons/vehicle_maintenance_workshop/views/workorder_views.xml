@@ -64,15 +64,16 @@
                             </field>
                             <group>
                                 <field name="costo_totale" />
+                                <field name="fattura_id" invisible="stato != 'fatturato'"/>
                             </group>
                         </page>
                     </notebook>
                 </sheet>
                 
-                <!-- <div class="oe_chatter">
-                    <field name="message_follower_ids" groups="base.group_user"/>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
                     <field name="message_ids"/>
-                </div> -->
+                </div>
             </form>
         </field>
     </record>

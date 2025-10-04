@@ -2,6 +2,7 @@ from odoo import models, fields, api
 
 class ProductProduct(models.Model):
     _inherit = "product.product"  # eredita il modello esistente
+    
 
     
     quantita_totale = fields.Integer(string="Quantita Totale", default = 0)

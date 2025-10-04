@@ -1,12 +1,22 @@
 from odoo import models, fields, api
 from datetime import timedelta, datetime
+from odoo.exceptions import ValidationError
+import re
 
 class Vehicle(models.Model):
 
     _name = "vehicle.vehicle"
     _description = "Vehicle Model"
+    _inherit = ['mail.thread']
 
-    targa = fields.Char(string="Targa", required=True, )
+    targa = fields.Char(string="Targa", required=True)
+
+    @api.constrains('targa')
+    def _check_targa_format(self):
+        pattern = r'^[A-Z]{2}\d{3}[A-Z]{2}$'
+        for rec in self:
+            if rec.targa and not re.match(pattern, rec.targa):
+                raise ValidationError("La targa inserita non rispetta il formato richiesto (AA123BB).")
 
     marca = fields.Char(string="Marca", required=True)
 
@@ -26,22 +36,25 @@ class Vehicle(models.Model):
         )
     
     km_attuali = fields.Integer(string="Chilometri",
-                                required=True)
+                                required=True,
+                                tracking=True)
     
     data_ultima_revisione = fields.Date(string="Data Ultima Revisione",
                                         default = False,
-                                        store = True)
+                                        store = True,
+                                        tracking=True)
 
     def _compute_prox_revisione(self):
         if self.data_ultima_revisione:
-            retval = self.data_ultima_revisione + timedelta(days=365)
+            retval = self.data_ultima_revisione + timedelta(days=(365 * 2))
         else:
             retval = fields.Date.today() + timedelta(days=365)
         return retval
     
     data_prox_revisione = fields.Date(string="Data Prossima Revisione",
                                       default = _compute_prox_revisione,
-                                      store=True
+                                      store=True,
+                                      tracking=True
                                       )
     
     _sql_constraints = [

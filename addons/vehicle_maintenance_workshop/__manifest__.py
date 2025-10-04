@@ -6,7 +6,8 @@
     "depends": [
         "base",
         "product",
-        "account"
+        "account",
+        "mail"
     ],
 
     "data": [

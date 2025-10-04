@@ -5,6 +5,7 @@ from odoo.exceptions import ValidationError, UserError
 class Workorder(models.Model):
     _name = "vehicle.workorder"
     _description = "Workorders Model"
+    _inherit = ['mail.thread']
 
     reference = fields.Char(string="N. Intervento", default="New")
 
@@ -19,7 +20,8 @@ class Workorder(models.Model):
         "rel_vehicle_workorder_type",
         "workorder_id",
         "workorder_type_id",
-        string="Tipologie Interventi"
+        string="Tipologie Interventi",
+        tracking=True
     )
 
     stato = fields.Selection(
@@ -32,34 +34,44 @@ class Workorder(models.Model):
             ("cancellato", "Cancellato")
         ],
         default="bozza",
-        string="Stato"
+        string="Stato",
+        tracking=True
     )
 
     ricambi_usati_ids = fields.One2many(
         "workorder.ricambio",
         "workorder_id",
-        string="Ricambi Usati"
+        string="Ricambi Usati",
+        tracking=True
     )
 
-    ore_lavorate = fields.Integer(string="Ore Lavorate")
+    ore_lavorate = fields.Integer(string="Ore Lavorate", tracking=True)
 
-    fattura_id = fields.Many2one('account.move', string="Fattura Generata")
+    fattura_id = fields.Many2one('account.move', string="Fattura Generata", readonly = True)
 
     cliente_id = fields.Many2one(
         "res.partner",
         string="Cliente",
-        required=True
+        related="vehicle_id.proprietario_id",
+        store=True
     )
+
 
     costo_totale = fields.Float(
         string="Costo Totale",
         compute="_compute_costo_totale"
     )
 
-    @api.depends("ricambi_usati_ids.subtotal")
+    @api.depends("ricambi_usati_ids.subtotal", "ore_lavorate")
     def _compute_costo_totale(self):
+        # Recupera il prodotto Ore Lavoro
+        ore_lavoro_product = self.env['product.product'].search([('name', '=', 'Ore Lavoro')], limit=1)
+        costo_manodopera_unitario = ore_lavoro_product.standard_price if ore_lavoro_product else 20 
+
         for rec in self:
-            rec.costo_totale = sum(line.subtotal for line in rec.ricambi_usati_ids) + rec.ore_lavorate * 20 # estrarre costo manodopera
+            costo_ricambi = sum(line.subtotal for line in rec.ricambi_usati_ids)
+            costo_manodopera = rec.ore_lavorate * costo_manodopera_unitario
+            rec.costo_totale = costo_ricambi + costo_manodopera
 
     # Metodi generali
 
