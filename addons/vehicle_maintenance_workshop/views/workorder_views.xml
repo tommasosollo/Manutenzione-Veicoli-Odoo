@@ -30,14 +30,14 @@
                             invisible="stato != 'confermato'" class="oe_highlight"/>
                         <button name="action_completato" type="object" string="Completato"
                             invisible="stato != 'in_corso'" class="oe_highlight"/>
-                        <button name="action_fatturato" type="object" string="Fatturato"
+                        <button name="action_fatturato" type="object" string="Fattura"
                             invisible="stato != 'completato'" class="oe_highlight"/>
                         <button name="action_cancella" type="object" string="Cancella"
                             invisible="stato in ('completato','fatturato', 'cancellato')" class="oe_highlight"/>
                     </header>
 
 
-                    <field name="stato" widget="statusbar" />
+                    <field name="stato" widget="statusbar" statusbar_visible="bozza,confermato,in_corso,completato,fatturato" />
                 </header>
                 <sheet>
                     <group>

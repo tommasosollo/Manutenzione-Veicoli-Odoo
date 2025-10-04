@@ -23,6 +23,14 @@
         <field name="model">vehicle.vehicle</field>
         <field name="arch" type="xml">
             <form string="Veicoli">
+                <header>
+                    <button name="%(action_intervention)d" type="action" class="oe_stat_button" icon="fa-wrench">
+                        <field name="num_interventi" widget="statinfo"/>
+                    </button>
+                    <button name="%(action_invoice)d" type="action" class="oe_stat_button" icon="fa-file-invoice">
+                        <field name="num_fatture" widget="statinfo"/>
+                    </button>
+                </header>
                 <sheet>
                     <group>
                         <group>
