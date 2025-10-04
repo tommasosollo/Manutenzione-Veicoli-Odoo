@@ -44,26 +44,6 @@ class Vehicle(models.Model):
                                       store=True
                                       )
     
-    # Contatori per smart buttons
-    num_interventi = fields.Integer(
-        string="Interventi",
-        compute="_compute_intervention_count"
-    )
-    num_fatture = fields.Integer(
-        string="Fatture",
-        compute="_compute_invoice_count"
-    )
-
-    @api.depends()
-    def _compute_intervention_count(self):
-        for rec in self:
-            rec.intervention_count = self.env["vehicle.workorder"].search_count([("vehicle_id", "=", rec.id)])
-
-    @api.depends()
-    def _compute_invoice_count(self):
-        for rec in self:
-            rec.invoice_count = self.env["account.move"].search_count([("vehicle_id", "=", rec.id), ("move_type", "=", "out_invoice")])
-
     _sql_constraints = [
         ('unique_targa', 'unique(targa)', 'La targa deve essere univoca!')
     ]
