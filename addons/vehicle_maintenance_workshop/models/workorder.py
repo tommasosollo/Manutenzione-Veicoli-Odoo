@@ -114,6 +114,19 @@ class Workorder(models.Model):
             # Verifica che ci siano dati da fatturare
             if not rec.ricambi_usati_ids and rec.ore_lavorate == 0:
                 raise UserError("Non ci sono ore di lavoro o ricambi da fatturare.")
+            
+            journal = self.env['account.journal'].search([
+                ('type', '=', 'sale'),
+                ('company_id', '=', self.env.company.id)
+            ], limit=1)
+
+            if not journal:
+                self.env['account.journal'].create({
+                    'name': 'Vendite',
+                    'code': 'VEN',
+                    'type': 'sale',
+                    'company_id': self.env.company.id,
+                })
 
             # Creo la fattura (account.move)
             invoice_vals = {
