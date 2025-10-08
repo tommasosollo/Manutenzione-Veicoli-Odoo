@@ -64,7 +64,8 @@
                             </field>
                             <group>
                                 <field name="costo_totale" />
-                                <field name="fattura_id" invisible="stato != 'fatturato'"/>
+                                <field name="fattura_id" invisible="stato != 'fatturato'" 
+                                groups="vehicle_maintenance_workshop.group_workshop_administration,vehicle_maintenance_workshop.group_workshop_chief"/>
                             </group>
                         </page>
                     </notebook>

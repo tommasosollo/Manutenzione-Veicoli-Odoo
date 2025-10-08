@@ -136,6 +136,22 @@ class Workorder(models.Model):
                 'invoice_line_ids': [],
             }
 
+            for r in rec.ricambi_usati_ids:
+                income_account = r.product_id.property_account_income_id or \
+                                r.product_id.categ_id.property_account_income_categ_id
+
+                if not income_account:
+                    raise UserError(f"Il prodotto '{r.product_id.name}' non ha un conto entrate configurato.")
+
+                line_vals = (0, 0, {
+                    'product_id': r.product_id.id,
+                    'quantity': r.quantita,
+                    'price_unit': r.costo,
+                    'name': r.product_id.name,
+                    'account_id': income_account.id,
+                })
+                invoice_vals['invoice_line_ids'].append(line_vals)
+
             # Linee prodotti (ricambi usati)
             for r in rec.ricambi_usati_ids:
                 line_vals = (0, 0, {

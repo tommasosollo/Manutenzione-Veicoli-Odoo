@@ -7,7 +7,7 @@
         "base",
         "product",
         "account",
-        "mail"
+        "mail",
     ],
 
     "data": [
